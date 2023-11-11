@@ -1,4 +1,4 @@
-package servicerest.modelo.entidad;
+package aplicacionclienterestapplication.model;
 
 public class Libro {
 
@@ -6,6 +6,8 @@ public class Libro {
     private String titulo;
     private String editorial;
     private int nota;
+
+    public Libro(){ super();}
 
     public Libro(int id, String titulo, String editorial, int nota) {
         this.id = id;
