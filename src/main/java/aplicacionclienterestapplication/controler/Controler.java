@@ -58,9 +58,6 @@ public class Controler {
             } else {
                 System.out.println("Error en la solicitud: " + e.getMessage());
             }
-        } catch (Exception e) {
-            // Manejar otras excepciones aquí
-            System.out.println("Error en la solicitud: " + e.getMessage());
         }
 
     }
@@ -69,12 +66,18 @@ public class Controler {
      * Método para eliminar un libro utilizando el servicio REST.
      */
     public static void borrarLibro() {
-        System.out.print("Introduce el ID del libro a dar de baja: ");
-        int id = scanner.nextInt();
+        try {
+            System.out.print("Introduce el ID del libro a dar de baja: ");
+            int id = scanner.nextInt();
 
-        restTemplate.delete(BASE_URL + "/libros/" + id);
+            restTemplate.delete(BASE_URL + "/libros/" + id);
 
-        System.out.println("Libro eliminado con éxito.");
+            System.out.println("Libro eliminado con éxito.");
+        } catch (HttpClientErrorException.BadRequest e) {
+            System.out.println("No existe Libro con ese id");
+        } catch (Exception e) {
+            System.out.println("Error al intentar eliminar el libro: " + e.getMessage());
+        }
     }
 
     /**
