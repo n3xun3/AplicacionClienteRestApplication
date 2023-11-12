@@ -54,7 +54,7 @@ public class Controler {
         } catch (HttpClientErrorException.BadRequest e) {
             // Manejar la excepción de BadRequest aquí
             if (e.getRawStatusCode() == 400) {
-                System.out.println("Ya existe un libro con el mismo id. No se puede agregar.");
+                System.out.println("Ya existe un libro con el mismo id o titulo. No se puede agregar.");
             } else {
                 System.out.println("Error en la solicitud: " + e.getMessage());
             }
