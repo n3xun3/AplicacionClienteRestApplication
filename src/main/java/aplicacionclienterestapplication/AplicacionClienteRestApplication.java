@@ -57,6 +57,7 @@ public class AplicacionClienteRestApplication {
                     break;
                 case 6:
                     System.out.println("Saliendo de la aplicación. ¡Hasta luego!");
+                    System.exit(0);
                     break;
                 default:
                     System.out.println("Opción no válida. Inténtalo de nuevo.");
