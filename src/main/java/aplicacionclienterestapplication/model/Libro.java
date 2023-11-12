@@ -1,14 +1,14 @@
 /**
- * Clase que representa la entidad Libro.
- * Contiene atributos que describen las propiedades de un libro, así como métodos para acceder y modificar estos atributos.
+ * Clase que representa un libro con información como ID, título, editorial y nota.
+ * Se utiliza para modelar objetos de libros en la aplicación cliente.
  *
- * @author Jorge Ruiz Martinez
+ * @author Tu Nombre
  * @version 1.0
  */
 package aplicacionclienterestapplication.model;
 
 /**
- * Clase que representa la entidad Libro.
+ * Clase que representa un libro con información como ID, título, editorial y nota.
  */
 public class Libro {
 
@@ -24,8 +24,13 @@ public class Libro {
     /** Nota asignada al libro. */
     private int nota;
 
+    /** Constructor predeterminado. */
+    public Libro() {
+        super();
+    }
+
     /**
-     * Constructor que inicializa un libro con los valores proporcionados.
+     * Constructor que inicializa un libro con la información proporcionada.
      *
      * @param id        Identificador único del libro.
      * @param titulo    Título del libro.
@@ -42,7 +47,7 @@ public class Libro {
     /**
      * Obtiene el identificador único del libro.
      *
-     * @return El identificador único del libro.
+     * @return Identificador único del libro.
      */
     public int getId() {
         return id;
@@ -51,7 +56,7 @@ public class Libro {
     /**
      * Establece el identificador único del libro.
      *
-     * @param id El nuevo identificador único del libro.
+     * @param id Identificador único del libro.
      */
     public void setId(int id) {
         this.id = id;
@@ -60,7 +65,7 @@ public class Libro {
     /**
      * Obtiene el título del libro.
      *
-     * @return El título del libro.
+     * @return Título del libro.
      */
     public String getTitulo() {
         return titulo;
@@ -69,7 +74,7 @@ public class Libro {
     /**
      * Establece el título del libro.
      *
-     * @param titulo El nuevo título del libro.
+     * @param titulo Título del libro.
      */
     public void setTitulo(String titulo) {
         this.titulo = titulo;
@@ -78,7 +83,7 @@ public class Libro {
     /**
      * Obtiene la editorial del libro.
      *
-     * @return La editorial del libro.
+     * @return Editorial del libro.
      */
     public String getEditorial() {
         return editorial;
@@ -87,7 +92,7 @@ public class Libro {
     /**
      * Establece la editorial del libro.
      *
-     * @param editorial La nueva editorial del libro.
+     * @param editorial Editorial del libro.
      */
     public void setEditorial(String editorial) {
         this.editorial = editorial;
@@ -96,7 +101,7 @@ public class Libro {
     /**
      * Obtiene la nota asignada al libro.
      *
-     * @return La nota asignada al libro.
+     * @return Nota asignada al libro.
      */
     public int getNota() {
         return nota;
@@ -105,21 +110,19 @@ public class Libro {
     /**
      * Establece la nota asignada al libro.
      *
-     * @param nota La nueva nota asignada al libro.
+     * @param nota Nota asignada al libro.
      */
     public void setNota(int nota) {
         this.nota = nota;
     }
 
     /**
-     * Sobrescribe el método toString para proporcionar una representación en cadena del objeto Libro.
+     * Representación en cadena del objeto libro.
      *
-     * @return Una cadena que representa el objeto Libro.
+     * @return Cadena que representa el objeto libro.
      */
     @Override
     public String toString() {
         return "Libro [id=" + id + ", titulo=" + titulo + ", editorial=" + editorial + ", nota=" + nota + "]";
     }
-
-
 }
