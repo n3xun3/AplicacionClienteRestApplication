@@ -105,7 +105,7 @@ public class Controler {
     public static void obtenerLibro() {
         System.out.print("Introduce el ID del libro a obtener: ");
         int id = scanner.nextInt();
-
+        id= id-1;
         ResponseEntity<Libro> response = restTemplate.getForEntity(BASE_URL + "/libros/" + id, Libro.class);
 
         if (response.getStatusCode().is2xxSuccessful()) {
