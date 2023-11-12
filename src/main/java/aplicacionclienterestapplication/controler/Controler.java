@@ -2,7 +2,7 @@
  * Clase que actúa como controlador para la interacción con el servicio REST de libros.
  * Proporciona métodos para realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) utilizando el servicio REST.
  *
- * @author Tu Nombre
+ * @author Jorge Ruiz Martinez
  * @version 1.0
  */
 package aplicacionclienterestapplication.controler;
