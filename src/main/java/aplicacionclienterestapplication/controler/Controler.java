@@ -84,39 +84,53 @@ public class Controler {
      * Método para modificar un libro utilizando el servicio REST.
      */
     public static void modificarLibro() {
-        System.out.print("Introduce el ID del libro a modificar: ");
-        int id = scanner.nextInt();
-        scanner.nextLine(); // Consumir el salto de línea
+        try {
+            System.out.print("Introduce el ID del libro a modificar: ");
+            int id = scanner.nextInt();
+            scanner.nextLine(); // Consumir el salto de línea
 
-        System.out.println("Introduce los nuevos datos del libro:");
-        System.out.print("Título: ");
-        String titulo = scanner.nextLine();
-        System.out.print("Editorial: ");
-        String editorial = scanner.nextLine();
-        System.out.print("Nota: ");
-        int nota = scanner.nextInt();
+            // Verificar si el libro existe antes de continuar
+            ResponseEntity<Libro> response = restTemplate.getForEntity(BASE_URL + "/libros/" + id, Libro.class);
 
-        Libro libroModificado = new Libro(id, titulo, editorial, nota);
-        restTemplate.put(BASE_URL + "/libros/" + id, libroModificado);
+            if (!response.getStatusCode().is2xxSuccessful() || response.getBody() == null) {
+                System.out.println("No se encontró un libro con el ID proporcionado. La modificación no es posible.");
+                return; // Salir del método si el libro no existe
+            }
 
-        System.out.println("Libro modificado con éxito.");
+            System.out.println("Introduce los nuevos datos del libro:");
+            System.out.print("Título: ");
+            String titulo = scanner.nextLine();
+            System.out.print("Editorial: ");
+            String editorial = scanner.nextLine();
+            System.out.print("Nota: ");
+            int nota = scanner.nextInt();
+
+            Libro libroModificado = new Libro(id, titulo, editorial, nota);
+            restTemplate.put(BASE_URL + "/libros/" + id, libroModificado);
+
+            System.out.println("Libro modificado con éxito.");
+        } catch (Exception e) {
+            System.out.println("Error al intentar modificar el libro: " + e.getMessage());
+        }
     }
 
     /**
      * Método para obtener un libro utilizando el servicio REST.
      */
     public static void obtenerLibro() {
-        System.out.print("Introduce el ID del libro a obtener: ");
-        int id = scanner.nextInt();
-        id= id-1;
-        ResponseEntity<Libro> response = restTemplate.getForEntity(BASE_URL + "/libros/" + id, Libro.class);
+        try {
+            System.out.print("Introduce el ID del libro a obtener: ");
+            int id = scanner.nextInt();
+            id = id - 1;
 
-        if (response.getStatusCode().is2xxSuccessful()) {
-            System.out.println("Libro encontrado: " + response.getBody());
-        } else {
+            ResponseEntity<Libro> response = restTemplate.getForEntity(BASE_URL + "/libros/" + id, Libro.class);
             System.out.println("Libro no encontrado.");
+
+        } catch (Exception e) {
+            System.out.println("Error al intentar obtener el libro: " + e.getMessage());
         }
     }
+
 
     /**
      * Método para listar todos los libros utilizando el servicio REST.
