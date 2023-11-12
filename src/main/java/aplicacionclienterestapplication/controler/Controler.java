@@ -1,3 +1,10 @@
+/**
+ * Clase que actúa como controlador para la interacción con el servicio REST de libros.
+ * Proporciona métodos para realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) utilizando el servicio REST.
+ *
+ * @author Tu Nombre
+ * @version 1.0
+ */
 package aplicacionclienterestapplication.controler;
 
 import aplicacionclienterestapplication.model.Libro;
@@ -9,14 +16,25 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Controlador para la interacción con el servicio REST de libros.
+ */
 public class Controler {
 
+    /** URL base del servicio REST. */
     private static final String BASE_URL = "http://localhost:8080"; // Ajusta la URL según tu configuración
+
+    /** Objeto RestTemplate para realizar solicitudes REST. */
     private static final RestTemplate restTemplate = new RestTemplate();
+
+    /** Objeto Scanner para la entrada de usuario. */
     private static final Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Método para agregar un nuevo libro utilizando el servicio REST.
+     */
     public static void altaLibro() {
-        try{
+        try {
             System.out.println("Introduce los datos del nuevo libro:");
             System.out.print("Id: ");
             int id = scanner.nextInt();
@@ -33,7 +51,7 @@ public class Controler {
 
             System.out.println("Libro añadido con éxito. ID asignado: " + response.getBody().getId());
 
-        }catch (HttpClientErrorException.BadRequest e) {
+        } catch (HttpClientErrorException.BadRequest e) {
             // Manejar la excepción de BadRequest aquí
             if (e.getRawStatusCode() == 400) {
                 System.out.println("Ya existe un libro con el mismo id. No se puede agregar.");
@@ -47,6 +65,9 @@ public class Controler {
 
     }
 
+    /**
+     * Método para eliminar un libro utilizando el servicio REST.
+     */
     public static void borrarLibro() {
         System.out.print("Introduce el ID del libro a dar de baja: ");
         int id = scanner.nextInt();
@@ -56,6 +77,9 @@ public class Controler {
         System.out.println("Libro eliminado con éxito.");
     }
 
+    /**
+     * Método para modificar un libro utilizando el servicio REST.
+     */
     public static void modificarLibro() {
         System.out.print("Introduce el ID del libro a modificar: ");
         int id = scanner.nextInt();
@@ -75,6 +99,9 @@ public class Controler {
         System.out.println("Libro modificado con éxito.");
     }
 
+    /**
+     * Método para obtener un libro utilizando el servicio REST.
+     */
     public static void obtenerLibro() {
         System.out.print("Introduce el ID del libro a obtener: ");
         int id = scanner.nextInt();
@@ -88,6 +115,9 @@ public class Controler {
         }
     }
 
+    /**
+     * Método para listar todos los libros utilizando el servicio REST.
+     */
     public static void listarLibros() {
         ResponseEntity<Libro[]> response = restTemplate.getForEntity(BASE_URL + "/libros", Libro[].class);
         List<Libro> libros = Arrays.asList(response.getBody());
