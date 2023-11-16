@@ -6,8 +6,9 @@
  * @version 1.0
  */
 package aplicacionclienterestapplication.controler;
-
+import org.springframework.http.*;
 import aplicacionclienterestapplication.model.Libro;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -47,19 +48,27 @@ public class Controler {
             int nota = scanner.nextInt();
 
             Libro nuevoLibro = new Libro(id, titulo, editorial, nota);
-            ResponseEntity<Libro> response = restTemplate.postForEntity(BASE_URL + "/libros", nuevoLibro, Libro.class);
 
-            System.out.println("Libro añadido con éxito. ID asignado: " + response.getBody().getId());
+            // Configurar las cabeceras y el cuerpo de la solicitud HTTP
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<Libro> request = new HttpEntity<>(nuevoLibro, headers);
 
+            // Enviar la solicitud POST y obtener la respuesta
+            ResponseEntity<String> response = restTemplate.exchange(BASE_URL + "/libros", HttpMethod.POST, request, String.class);
+
+            if (response.getStatusCode() == HttpStatus.CREATED) {
+                System.out.println("Libro añadido con éxito.");
+            } else {
+                System.out.println("Error al intentar agregar el libro.");
+            }
         } catch (HttpClientErrorException.BadRequest e) {
-            // Manejar la excepción de BadRequest aquí
             if (e.getRawStatusCode() == 400) {
-                System.out.println("Ya existe un libro con el mismo id o titulo. No se puede agregar.");
+                System.out.println("Ya existe un libro con el mismo id o título. No se puede agregar.");
             } else {
                 System.out.println("Error en la solicitud: " + e.getMessage());
             }
         }
-
     }
 
     /**
@@ -89,10 +98,9 @@ public class Controler {
             int id = scanner.nextInt();
             scanner.nextLine(); // Consumir el salto de línea
 
-            // Verificar si el libro existe antes de continuar
             ResponseEntity<Libro> response = restTemplate.getForEntity(BASE_URL + "/libros/" + id, Libro.class);
 
-            if (!response.getStatusCode().is2xxSuccessful() || response.getBody() == null) {
+            if (response.getBody() == null) {
                 System.out.println("No se encontró un libro con el ID proporcionado. La modificación no es posible.");
                 return; // Salir del método si el libro no existe
             }
@@ -124,7 +132,7 @@ public class Controler {
             id = id - 1;
 
             ResponseEntity<Libro> response = restTemplate.getForEntity(BASE_URL + "/libros/" + id, Libro.class);
-            System.out.println("Libro no encontrado.");
+            System.out.println(response.getBody());
 
         } catch (Exception e) {
             System.out.println("Error al intentar obtener el libro: " + e.getMessage());
